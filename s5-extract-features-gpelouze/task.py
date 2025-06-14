@@ -10,7 +10,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--tiles', action='store', type=str, required=True, dest='tiles')
+arg_parser.add_argument('--unique_tiles', action='store', type=str, required=True, dest='unique_tiles')
 
 arg_parser.add_argument('--param_apply_filter_value', action='store', type=str, required=True, dest='param_apply_filter_value')
 arg_parser.add_argument('--param_attribute', action='store', type=str, required=True, dest='param_attribute')
@@ -29,7 +29,7 @@ print(args)
 
 id = args.id
 
-tiles = json.loads(args.tiles)
+unique_tiles = json.loads(args.unique_tiles)
 
 param_apply_filter_value = args.param_apply_filter_value.replace('"','')
 param_attribute = args.param_attribute.replace('"','')
@@ -48,7 +48,7 @@ conf_local_path_targets = conf_local_path_targets = os.path.join('/tmp/data', 't
 
 feature_files = []
 
-for i, tile in enumerate(tiles):
+for i, tile in enumerate(unique_tiles):
     grid_feature = {
         'min_x': float(param_min_x),
         'max_x': float(param_max_x),
@@ -93,14 +93,14 @@ for i, tile in enumerate(tiles):
     print(target_file)
 
     if not os.path.isfile(target_file):
-        print(f'Extracting features from {tile} ({i + 1} of {len(tiles)})')
+        print(f'Extracting features from {tile} ({i + 1} of {len(unique_tiles)})')
         processing = DataProcessing(tile, tile_index=idx, label=tile).config(
             feature_extraction_input
             )
         processing.run()
     else:
         print(
-            f'Skipping features extraction for {tile} ({i + 1} of {len(tiles)}) because {target_file} already exists'
+            f'Skipping features extraction for {tile} ({i + 1} of {len(unique_tiles)}) because {target_file} already exists'
             )
 
     feature_files.append(target_file)
