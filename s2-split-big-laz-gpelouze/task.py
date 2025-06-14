@@ -87,9 +87,6 @@ for raw_file in raw_laz_files:
 
 print(split_laz_files)
 
-file_filename = open("/tmp/filename_" + id + ".json", "w")
-file_filename.write(json.dumps(filename))
-file_filename.close()
 file_split_laz_files = open("/tmp/split_laz_files_" + id + ".json", "w")
 file_split_laz_files.write(json.dumps(split_laz_files))
 file_split_laz_files.close()
