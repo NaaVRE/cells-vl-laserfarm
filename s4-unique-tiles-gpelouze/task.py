@@ -20,7 +20,10 @@ tiles = json.loads(args.tiles)
 
 
 
-tiles = list(set(tiles))
+unique_tiles = list(set(tiles))
 
-print(tiles)
+print(unique_tiles)
 
+file_unique_tiles = open("/tmp/unique_tiles_" + id + ".json", "w")
+file_unique_tiles.write(json.dumps(unique_tiles))
+file_unique_tiles.close()
