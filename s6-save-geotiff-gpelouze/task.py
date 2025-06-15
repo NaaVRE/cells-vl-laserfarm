@@ -85,3 +85,6 @@ mc.fput_object(
     object_name=geotiff_file_remote,
     )
 
+file_geotiff_file_local = open("/tmp/geotiff_file_local_" + id + ".json", "w")
+file_geotiff_file_local.write(json.dumps(geotiff_file_local))
+file_geotiff_file_local.close()
