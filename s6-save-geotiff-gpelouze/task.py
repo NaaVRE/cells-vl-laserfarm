@@ -17,6 +17,7 @@ arg_parser.add_argument('--feature_files', action='store', type=str, required=Tr
 
 arg_parser.add_argument('--param_feature_name', action='store', type=str, required=True, dest='param_feature_name')
 arg_parser.add_argument('--param_minio_endpoint', action='store', type=str, required=True, dest='param_minio_endpoint')
+arg_parser.add_argument('--param_minio_public_dataset_prefix', action='store', type=str, required=True, dest='param_minio_public_dataset_prefix')
 arg_parser.add_argument('--param_minio_user_bucket', action='store', type=str, required=True, dest='param_minio_user_bucket')
 arg_parser.add_argument('--param_minio_user_prefix', action='store', type=str, required=True, dest='param_minio_user_prefix')
 
@@ -29,11 +30,13 @@ feature_files = json.loads(args.feature_files)
 
 param_feature_name = args.param_feature_name.replace('"','')
 param_minio_endpoint = args.param_minio_endpoint.replace('"','')
+param_minio_public_dataset_prefix = args.param_minio_public_dataset_prefix.replace('"','')
 param_minio_user_bucket = args.param_minio_user_bucket.replace('"','')
 param_minio_user_prefix = args.param_minio_user_prefix.replace('"','')
 
 conf_local_path_targets = conf_local_path_targets = os.path.join('/tmp/data', 'targets')
 conf_local_path_geotiff = conf_local_path_geotiff = os.path.join('/tmp/data', 'geotiff')
+conf_local_tmp = conf_local_tmp = '/tmp/data'
 
 print(feature_files)
 
@@ -62,11 +65,14 @@ writer = (
     )
 writer.run()
 
-geo_tiff = os.path.join(
-    conf_local_path_geotiff,
-    f'geotiff_TILE_000_BAND_{param_feature_name}.tif'
+geotiff_file_local = os.path.join(
+    conf_local_path_geotiff, f'geotiff_TILE_000_BAND_{param_feature_name}.tif',
     )
-print(geo_tiff)
+geotiff_file_remote = os.path.join(
+    param_minio_user_prefix, param_minio_public_dataset_prefix,
+    os.path.relpath(geotiff_file_local, conf_local_tmp),
+    )
+print(f'Uploading {geotiff_file_local} to {param_minio_user_bucket}/{geotiff_file_remote}')
 
 mc = Minio(
     endpoint=param_minio_endpoint,
@@ -75,10 +81,7 @@ mc = Minio(
     )
 mc.fput_object(
     bucket_name=param_minio_user_bucket,
-    file_path=geo_tiff,
-    object_name=f'{param_minio_user_prefix}/{os.path.relpath(geo_tiff, conf_local_path_geotiff)}',
+    file_path=geotiff_file_local,
+    object_name=geotiff_file_remote,
     )
 
-file_geo_tiff = open("/tmp/geo_tiff_" + id + ".json", "w")
-file_geo_tiff.write(json.dumps(geo_tiff))
-file_geo_tiff.close()
