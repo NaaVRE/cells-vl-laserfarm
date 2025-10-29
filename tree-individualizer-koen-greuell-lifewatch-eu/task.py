@@ -29,6 +29,8 @@ class Tree_point:
         self.geolocation_point = geolocation_point
 
 def assign_points_to_trees(non_ground_ALS_point_cloud_filenames):
+    for ALS_point_cloud_filename in non_ground_ALS_point_cloud_filenames:
+        print(ALS_point_cloud_filename)
     return 
 
 assign_points_to_trees(non_ground_ALS_point_cloud_filenames)
