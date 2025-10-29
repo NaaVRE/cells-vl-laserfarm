@@ -1,3 +1,4 @@
+from typing import List
 
 import argparse
 import json
@@ -23,6 +24,7 @@ shapefiles_of_plot_locations = json.loads(args.shapefiles_of_plot_locations)
 """
 Determines which airborne laser scanning (ALS) tile is need for each plot location
 """
+
 def Get_laz_file_mapping(shapefile_names):
     """
     A placeholder method which should return a ALS point cloud tile filenames that cover the geographical area of the plot locations 
@@ -38,8 +40,11 @@ def Get_laz_file_mapping(shapefile_names):
     return shapefile_las_tile_mapping
         
 shapefile_laz_tile_mappings = Get_laz_file_mapping(shapefiles_of_plot_locations)
-las_data_filenames = set([mapping["las_tile_name"] for mapping in shapefile_laz_tile_mappings])
+las_data_filenames: List[str] = set([mapping["las_tile_name"] for mapping in shapefile_laz_tile_mappings])
 
+file_las_data_filenames = open("/tmp/las_data_filenames_" + id + ".json", "w")
+file_las_data_filenames.write(json.dumps(las_data_filenames))
+file_las_data_filenames.close()
 file_shapefile_laz_tile_mappings = open("/tmp/shapefile_laz_tile_mappings_" + id + ".json", "w")
 file_shapefile_laz_tile_mappings.write(json.dumps(shapefile_laz_tile_mappings))
 file_shapefile_laz_tile_mappings.close()
