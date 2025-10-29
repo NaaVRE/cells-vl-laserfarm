@@ -37,9 +37,9 @@ def Get_las_file_mapping(shapefile_names):
         shapefile_las_tile_mapping.append(mapping)
     return shapefile_las_tile_mapping
         
-shapefile_las_tile_mappings = Get_las_file_mapping(parameter_shapefiles_of_plot_locations)
-las_data_filenames = set([mapping["las_tile_name"] for mapping in shapefile_las_tile_mappings])
+shapefile_LAS_tile_mappings = Get_las_file_mapping(parameter_shapefiles_of_plot_locations)
+las_data_filenames = set([mapping["las_tile_name"] for mapping in shapefile_LAS_tile_mappings])
 
-file_shapefile_las_tile_mappings = open("/tmp/shapefile_las_tile_mappings_" + id + ".json", "w")
-file_shapefile_las_tile_mappings.write(json.dumps(shapefile_las_tile_mappings))
-file_shapefile_las_tile_mappings.close()
+file_shapefile_LAS_tile_mappings = open("/tmp/shapefile_LAS_tile_mappings_" + id + ".json", "w")
+file_shapefile_LAS_tile_mappings.write(json.dumps(shapefile_LAS_tile_mappings))
+file_shapefile_LAS_tile_mappings.close()
