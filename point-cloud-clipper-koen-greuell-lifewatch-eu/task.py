@@ -8,6 +8,8 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
+arg_parser.add_argument('--las_tiles_downloaded', action='store', type=int, required=True, dest='las_tiles_downloaded')
+
 arg_parser.add_argument('--shapefile_laz_tile_mappings', action='store', type=str, required=True, dest='shapefile_laz_tile_mappings')
 
 
@@ -16,6 +18,7 @@ print(args)
 
 id = args.id
 
+las_tiles_downloaded = args.las_tiles_downloaded
 shapefile_laz_tile_mappings = json.loads(args.shapefile_laz_tile_mappings)
 
 
@@ -33,7 +36,8 @@ def clip_point_cloud(shapefile_las_tile_mapping):
     
     return shapefile_las_tile_mapping["las_tile_name"].replace(".shp", ".COPC.LAZ")
 
-clipped_ALS_point_cloud_names = clip(shapefile_laz_tile_mappings)
+if las_tiles_downloaded:
+    clipped_ALS_point_cloud_names = clip(shapefile_laz_tile_mappings)
 
 file_clipped_ALS_point_cloud_names = open("/tmp/clipped_ALS_point_cloud_names_" + id + ".json", "w")
 file_clipped_ALS_point_cloud_names.write(json.dumps(clipped_ALS_point_cloud_names))
