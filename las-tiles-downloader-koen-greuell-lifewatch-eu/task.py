@@ -28,8 +28,8 @@ def download_las_tiles(las_filenames, source="ahn"):
     return 
 
 download_las_tiles(las_data_filenames)
-las_tiles_download_completed = 1
+las_tiles_downloaded = 1
 
-file_las_tiles_download_completed = open("/tmp/las_tiles_download_completed_" + id + ".json", "w")
-file_las_tiles_download_completed.write(json.dumps(las_tiles_download_completed))
-file_las_tiles_download_completed.close()
+file_las_tiles_downloaded = open("/tmp/las_tiles_downloaded_" + id + ".json", "w")
+file_las_tiles_downloaded.write(json.dumps(las_tiles_downloaded))
+file_las_tiles_downloaded.close()
