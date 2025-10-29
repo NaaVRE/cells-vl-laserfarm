@@ -8,7 +8,7 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument('--id', action='store', type=str, required=True, dest='id')
 
 
-arg_parser.add_argument('--parameter_shapefiles_of_plot_locations', action='store', type=str, required=True, dest='parameter_shapefiles_of_plot_locations')
+arg_parser.add_argument('--shapefiles_of_plot_locations', action='store', type=str, required=True, dest='shapefiles_of_plot_locations')
 
 
 args = arg_parser.parse_args()
@@ -16,7 +16,7 @@ print(args)
 
 id = args.id
 
-parameter_shapefiles_of_plot_locations = json.loads(args.parameter_shapefiles_of_plot_locations)
+shapefiles_of_plot_locations = json.loads(args.shapefiles_of_plot_locations)
 
 
 
@@ -37,7 +37,7 @@ def Get_laz_file_mapping(shapefile_names):
         shapefile_las_tile_mapping.append(mapping)
     return shapefile_las_tile_mapping
         
-shapefile_laz_tile_mappings = Get_laz_file_mapping(parameter_shapefiles_of_plot_locations)
+shapefile_laz_tile_mappings = Get_laz_file_mapping(shapefiles_of_plot_locations)
 las_data_filenames = set([mapping["las_tile_name"] for mapping in shapefile_laz_tile_mappings])
 
 file_shapefile_laz_tile_mappings = open("/tmp/shapefile_laz_tile_mappings_" + id + ".json", "w")
