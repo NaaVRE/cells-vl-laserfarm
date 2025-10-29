@@ -23,7 +23,7 @@ parameter_shapefiles_of_plot_locations = json.loads(args.parameter_shapefiles_of
 """
 Determines which airborne laser scanning (ALS) tile is need for each plot location
 """
-def Get_las_file_mapping(shapefile_names):
+def Get_laz_file_mapping(shapefile_names):
     """
     A placeholder method which should return a ALS point cloud tile filenames that cover the geographical area of the plot locations 
     """
@@ -37,9 +37,9 @@ def Get_las_file_mapping(shapefile_names):
         shapefile_las_tile_mapping.append(mapping)
     return shapefile_las_tile_mapping
         
-shapefile_LAS_tile_mappings = Get_las_file_mapping(parameter_shapefiles_of_plot_locations)
-las_data_filenames = set([mapping["las_tile_name"] for mapping in shapefile_LAS_tile_mappings])
+shapefile_laz_tile_mappings = Get_laz_file_mapping(parameter_shapefiles_of_plot_locations)
+las_data_filenames = set([mapping["las_tile_name"] for mapping in shapefile_laz_tile_mappings])
 
-file_shapefile_LAS_tile_mappings = open("/tmp/shapefile_LAS_tile_mappings_" + id + ".json", "w")
-file_shapefile_LAS_tile_mappings.write(json.dumps(shapefile_LAS_tile_mappings))
-file_shapefile_LAS_tile_mappings.close()
+file_shapefile_laz_tile_mappings = open("/tmp/shapefile_laz_tile_mappings_" + id + ".json", "w")
+file_shapefile_laz_tile_mappings.write(json.dumps(shapefile_laz_tile_mappings))
+file_shapefile_laz_tile_mappings.close()
