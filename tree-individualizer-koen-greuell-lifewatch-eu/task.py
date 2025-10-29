@@ -33,5 +33,6 @@ def assign_points_to_trees(non_ground_ALS_point_cloud_filenames):
         print(f"{ALS_point_cloud_filename=}")
     return 
 
+print(f"individualizing trees for the files: {non_ground_ALS_point_cloud_filenames}")
 assign_points_to_trees(non_ground_ALS_point_cloud_filenames)
 
